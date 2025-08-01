@@ -20,5 +20,8 @@
   },
   "devDependencies": {
     "concurrently": "^7.6.0"
+  },
+  "dependencies": {
+    "@bundled-es-modules/pdfjs-dist": "^3.6.172-alpha.1"
   }
-} 
+}
