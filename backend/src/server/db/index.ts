@@ -3,20 +3,25 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-// Parse DATABASE_URL for Supabase
-const connectionString = process.env.DATABASE_URL;
+// Validate required database environment variables
+const requiredEnvVars = ['DATABASE_USER', 'DATABASE_PASSWORD', 'DATABASE_HOST', 'DATABASE_NAME'];
+const missingEnvVars = requiredEnvVars.filter(envVar => !process.env[envVar]);
 
-if (!connectionString) {
-  console.error('DATABASE_URL is not set. Please configure your Supabase connection string.');
+if (missingEnvVars.length > 0) {
+  console.error(`Missing required environment variables: ${missingEnvVars.join(', ')}`);
+  console.error('Please configure your database connection environment variables.');
   process.exit(1);
 }
 
+console.log(`Connecting to database: ${process.env.DATABASE_HOST}:${process.env.DATABASE_PORT || '6543'}/${process.env.DATABASE_NAME}`);
+
 export const db = new Pool({
-  connectionString,
-  ssl: {
-    rejectUnauthorized: false
-  },
-  // Supabase recommended settings
+  user: process.env.DATABASE_USER,
+  password: process.env.DATABASE_PASSWORD,
+  host: process.env.DATABASE_HOST,
+  port: parseInt(process.env.DATABASE_PORT || '6543'),
+  database: process.env.DATABASE_NAME,
+  // Connection pool settings
   max: 20,
   idleTimeoutMillis: 30000,
   connectionTimeoutMillis: 2000,

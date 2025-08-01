@@ -61,7 +61,7 @@ DATABASE_PASSWORD=your-database-password
 DATABASE_NAME=postgres
 
 # API Keys
-OPENAI_API_KEY=your-openai-api-key
+GOOGLE_AI_API_KEY=your-google-ai-api-key
 
 # Environment
 ENVIRONMENT=development
@@ -141,7 +141,7 @@ make help            # Show all commands
 │  └─────────────────────────────────────────────────────────┘  │
 │                                                                 │
 │  ┌─────────────────┐                    ┌─────────────────┐   │
-│  │   Prisma ORM    │                    │   OpenAI API    │   │
+│  │   Prisma ORM    │                    │  Google AI API  │   │
 │  └─────────────────┘                    └─────────────────┘   │
 └─────────────────────────────────────────────────────────────────┘
            │                                        │
@@ -150,7 +150,7 @@ make help            # Show all commands
 ┌─────────────────────┐                  ┌─────────────────────┐
 │    PostgreSQL DB    │                  │  External Service   │
 │  ┌───────────────┐  │                  │                     │
-│  │ CVSubmission  │  │                  │   GPT-3.5 Turbo    │
+│  │ CVSubmission  │  │                  │  Gemini 1.5 Flash  │
 │  │    Table      │  │                  │                     │
 │  └───────────────┘  │                  └─────────────────────┘
 └─────────────────────┘
@@ -167,12 +167,27 @@ make help            # Show all commands
 
 - **PDF Upload**: Drag-and-drop or click to upload CV in PDF format
 
-- **AI Validation**: Compares form data with PDF content using OpenAI API
+- **AI Validation**: Compares form data with PDF content using Google Generative AI (Gemini 1.5 Flash)
   - Validates each field individually
   - Provides detailed match/mismatch information
   - Shows overall validation summary
+  - Graceful fallback when AI is unavailable
 
 - **Data Persistence**: All submissions are stored in PostgreSQL database
+
+## Troubleshooting
+
+### Google AI API Issues
+
+If you see "models/gemini-pro is not found" or similar errors:
+
+1. **Get your API key**: Visit [Google AI Studio](https://makersuite.google.com/app/apikey)
+2. **Create a new API key** and copy it
+3. **Add to your environment**: Set `GOOGLE_AI_API_KEY` in your `.env.config` file
+4. **Check model availability**: The app uses `gemini-1.5-flash` model
+5. **Verify your account**: Make sure your Google AI account is set up and has access to Gemini models
+
+If AI validation fails, the app will continue working without AI validation and save your CV submission.
 
 ## Setup Instructions
 

@@ -5,6 +5,8 @@ backend/node_modules/
 .pnp
 .pnp.js
 
+.env.config
+
 # Testing
 coverage/
 .nyc_output/

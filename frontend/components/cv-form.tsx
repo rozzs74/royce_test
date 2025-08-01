@@ -57,7 +57,7 @@ export function CVForm() {
       const formData = new FormData();
       formData.append('cv', file);
 
-      const uploadResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'}/api/upload`, {
+      const uploadResponse = await fetch(`http://localhost:3001/api/upload`, {
         method: 'POST',
         body: formData,
       });
